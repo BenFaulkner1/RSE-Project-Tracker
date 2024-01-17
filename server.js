@@ -8,6 +8,7 @@ import authRouter from "./router/authRouter.js";
 import { authenticateUser } from "./middleware/authMiddleware.js";
 import cookieParser from "cookie-parser";
 import userRouter from "./router/userRouter.js";
+import sendEmail from "./controllers/sendEmail.js";
 
 dotenv.config();
 
@@ -20,8 +21,10 @@ if (process.env.NODE_ENV === "development") {
 app.use(cookieParser());
 app.use(express.json());
 
+app.post("/api/v1/send", sendEmail);
+
 app.use("/api/v1/projects", authenticateUser, projectRouter);
-app.use("/api/v1/users", authenticateUser, userRouter);
+app.use("/api/v1/users", userRouter);
 app.use("/api/v1/auth", authRouter);
 
 app.use("*", (req, res) => {

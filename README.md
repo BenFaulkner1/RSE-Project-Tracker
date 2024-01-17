@@ -5654,7 +5654,11 @@ const SearchContainer = () => {
             list={[...Object.values(JOB_SORT_BY)]}
           />
 
-          <Link to="/dashboard/all-jobs" className="btn form-btn delete-btn">
+          <Link
+            to="/dashboard/all-jobs"
+            className="btn form-btn delete-btn"
+            onClick={(e) => e.currentTarget.form.reset()}
+          >
             Reset Search Values
           </Link>
           {/* TEMP!!!! */}

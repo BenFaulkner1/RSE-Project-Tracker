@@ -5,14 +5,20 @@ import {
   getCurrentUser,
   getApplicationStats,
   updateUser,
+  getUser,
 } from "../controllers/userController.js";
 
-import { authorizePermissions } from "../middleware/authMiddleware.js";
+import {
+  authenticateUser,
+  authorizePermissions,
+} from "../middleware/authMiddleware.js";
 
-router.get("/current-user", getCurrentUser);
-router.get("/admin/app-stats", getApplicationStats);
-router.patch("/update-user", updateUser);
+router.post("/user", getUser);
+router.get("/current-user", authenticateUser, getCurrentUser);
+router.get("/admin/app-stats", authenticateUser, getApplicationStats);
+router.patch("/update-user", authenticateUser, updateUser);
 router.get("/admin/app-stats", [
+  authenticateUser,
   authorizePermissions("admin"),
   getApplicationStats,
 ]);

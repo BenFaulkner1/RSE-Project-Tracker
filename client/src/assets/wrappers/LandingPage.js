@@ -1,6 +1,12 @@
 import styled from "styled-components";
 
 const Wrapper = styled.section`
+  .logo2 {
+    position: fixed;
+    width: 220px;
+    left: 20px;
+    top: 20px;
+  }
   nav {
     width: var(--fluid-width);
     max-width: var(--max-width);

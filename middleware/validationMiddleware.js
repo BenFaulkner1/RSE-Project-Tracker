@@ -30,7 +30,17 @@ const withValidationErrors = (validateValues) => {
 };
 
 export const validateProjectInput = withValidationErrors([
-  body("projectNumber").notEmpty().withMessage("project number is required"),
+  body("projectNumber")
+    .notEmpty()
+    .withMessage("project number is required")
+    .isLength({ min: 5, max: 5 })
+    .withMessage("project number needs to be 5 numbers long")
+    .custom(async (projectNumber) => {
+      const projectFound = await Project.findOne({ projectNumber });
+      if (projectFound) {
+        throw new BadRequestError("project number already exists");
+      }
+    }),
   body("projectTitle").notEmpty().withMessage("project title is required"),
 ]);
 
@@ -43,7 +53,12 @@ export const validateIdParam = withValidationErrors([
     if (!project) throw new NotFoundError(`no project with id: ${value}`);
     const isAdmin = req.user.role === "admin";
     const isOwner = req.user.userId === project.createdBy.toString();
-    if (!isAdmin && !isOwner)
+
+    let isManager;
+    if (req.user.name + " " + req.user.lastName === project.projectManager) {
+      isManager = true;
+    }
+    if (!isAdmin && !isOwner && !isManager)
       throw new UnauthorizedError("not authorized to access this route");
   }),
 ]);

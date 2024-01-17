@@ -1,10 +1,17 @@
 import React, { useState, createContext, useContext } from "react";
-import { Outlet, redirect, useLoaderData, useNavigate } from "react-router-dom";
+import {
+  Outlet,
+  redirect,
+  useLoaderData,
+  useNavigate,
+  useNavigation,
+} from "react-router-dom";
 import Wrapper from "../assets/wrappers/Dashboard";
 import { BigSidebar, SmallSidebar, Navbar } from "../components";
 import { checkDefaultTheme } from "../App";
 import customFetch from "../utils/customFetch.js";
 import { toast } from "react-toastify";
+import { Loading } from "../components";
 
 export const loader = async () => {
   try {
@@ -20,6 +27,9 @@ const DashboardContext = createContext();
 
 const DashboardLayout = ({ isDarkThemeEnabled }) => {
   const { user } = useLoaderData();
+  const navigation = useNavigation();
+  const isPageLoading = navigation.state === "loading";
+
   const navigate = useNavigate();
 
   const [showSidebar, setShowSidebar] = useState(false);
@@ -28,11 +38,10 @@ const DashboardLayout = ({ isDarkThemeEnabled }) => {
   const toggleDarkTheme = () => {
     const newDarkTheme = !isDarkTheme;
     setIsDarkTheme(newDarkTheme);
-
     localStorage.setItem("darkTheme", newDarkTheme);
   };
 
-  const toggleSidebar = () => {
+  const toggleSidebar = async () => {
     setShowSidebar(!showSidebar);
   };
 

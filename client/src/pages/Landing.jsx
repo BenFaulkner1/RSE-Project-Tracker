@@ -8,7 +8,7 @@ const Landing = () => {
   return (
     <Wrapper>
       <nav>
-        <img src={logo} alt="" />
+        <img src={logo} alt="" className="logo2" />
       </nav>
       <div className="container page">
         <div className="info">

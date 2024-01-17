@@ -1,4 +1,5 @@
 /* ============= GLOBAL CSS =============== */
+@import url("https://cdn.syncfusion.com/ej2/material.css");
 
 *,
 ::after,
@@ -7,6 +8,114 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+.e-gantt .e-gantt-splitter {
+  border-radius: 8px !important;
+}
+
+/* .dark-theme {
+  --text-color: var(--dark-mode-text-color);
+  --background-color: var(--dark-mode-bg-color);
+  --text-secondary-color: var(--dark-mode-text-secondary-color);
+  --background-secondary-color: var(--dark-mode-bg-secondary-color);
+} */
+
+/* .e-gantt .e-gantt-splitter {
+  border-radius: 8px !important;
+}
+
+.e-gantt .e-gantt-chart .e-timeline-header-table-container {
+  background-color: green !important;
+}
+
+.e-spinner-pane {
+  background-color: var(--dark-mode-bg-secondary-color) !important;
+}
+
+.e-table {
+  background-color: var(--dark-mode-bg-secondary-color) !important;
+  border-color: #740a3f !important;
+  border: none;
+}
+
+.e-header-cell-label {
+  background-color: var(--dark-mode-bg-secondary-color);
+  border-color: var(--dark-mode-bg-secondary-color);
+  color: var(--dark-mode-text-color);
+}
+
+.e-timeline-single-header-cell {
+  background-color: var(--dark-mode-bg-secondary-color);
+  border-color: white !important;
+}
+
+.e-gantt .e-gantt-splitter {
+  border-color: var(--dark-mode-bg-secondary-color);
+}
+
+.e-chart-row-cell {
+  background-color: var(--dark-mode-bg-secondary-color) !important;
+  border-color: white !important;
+}
+.e-grid .e-content {
+  background-color: var(--dark-mode-bg-secondary-color) !important;
+}
+
+.e-grid .e-content {
+  background-color: var(--dark-mode-bg-secondary-color) !important;
+}
+
+.e-gantt .e-gantt-chart .e-chart-rows-container {
+  background-color: var(--dark-mode-bg-secondary-color) !important;
+}
+
+.e-row {
+  background-color: var(--dark-mode-bg-secondary-color);
+  border-color: white !important;
+}
+.e-rowcell {
+  border-color: white !important;
+  color: white !important;
+}
+
+.e-gantt .e-gantt-tree-grid-pane .e-headercell {
+  background-color: var(--dark-mode-bg-secondary-color);
+  color: white;
+}
+.e-splitter .e-split-bar.e-split-bar-horizontal {
+  background-color: white;
+}
+
+.e-gantt-parent-taskbar {
+  background-color: var(--dark-mode-text-secondary-color) !important;
+}
+.e-gantt-child-taskbar {
+  background-color: #a05e8a !important;
+  border: none !important;
+}
+
+.e-gantt .e-gantt-chart .e-gantt-parent-taskbar-inner-div {
+  background-color: #755ea0 !important;
+}
+
+.e-gridrowindex3level0 {
+  background-color: #5e9ba0 !important;
+}
+
+.e-gridrowindex0level1 {
+  background-color: #755ea0 !important;
+}
+
+.e-gridrowindex0level1 ~ .e-rowcell {
+  background-color: #755ea0 !important;
+}
+.e-gridrowindex3level1 ~ .e-rowcell {
+  background-color: #755ea0 !important;
+}
+
+.e-row .e-altrow {
+  background-color: #5e7da0 !important;
+} */
 
 html {
   font-size: 100%;
@@ -237,7 +346,7 @@ button:disabled {
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-2);
   padding: 2rem 2.5rem;
-  margin: 3rem auto;
+  margin: 1rem auto;
 }
 .form-label {
   display: block;
@@ -280,6 +389,10 @@ button:disabled {
   color: var(--red-dark);
   letter-spacing: var(--letter-spacing);
   text-transform: capitalize;
+}
+.logo {
+  width: 180px;
+  margin-top: 3rem;
 }
 /* alert */
 

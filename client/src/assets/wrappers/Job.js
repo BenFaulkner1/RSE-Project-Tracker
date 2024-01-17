@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const Wrapper = styled.article`
   background: var(--background-secondary-color);
@@ -7,11 +7,12 @@ const Wrapper = styled.article`
   grid-template-rows: 1fr auto;
   box-shadow: var(--shadow-2);
   header {
-    padding: 1rem 1.5rem;
+    padding: 0.3rem 1.5rem;
     border-bottom: 1px solid var(--grey-100);
     display: grid;
     grid-template-columns: auto 1fr;
     align-items: center;
+    height: 80px;
   }
   .main-icon {
     width: 60px;
@@ -38,17 +39,17 @@ const Wrapper = styled.article`
     }
   }
   .content {
-    padding: 1rem 1.5rem;
+    padding: 0rem 1.5rem;
   }
   .content-center {
     display: grid;
     margin-top: 1rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     grid-template-columns: 1fr;
-    row-gap: 1.5rem;
+    row-gap: 1rem;
     align-items: center;
     @media (min-width: 576px) {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
     }
   }
   .status {
@@ -72,6 +73,7 @@ const Wrapper = styled.article`
     font-size: 0.85rem;
     display: flex;
     align-items: center;
+    margin-bottom: 10px;
   }
   .edit-btn {
     margin-right: 0.5rem;

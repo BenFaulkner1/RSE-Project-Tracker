@@ -5,18 +5,23 @@ import {
   FaFileContract,
 } from "react-icons/fa";
 import { PiProjectorScreenLight } from "react-icons/pi";
+import { BsBarChartSteps } from "react-icons/bs";
 import {
   FaPersonWalkingWithCane,
   FaPersonHarassing,
   FaPersonDrowning,
   FaPersonCircleCheck,
+  FaChartGantt,
+  FaIndustry,
 } from "react-icons/fa6";
+import { GiWaterTower } from "react-icons/gi";
+
 import { GiWaterTank } from "react-icons/gi";
 import { IoOptions } from "react-icons/io5";
 
 import { TbMoneybag } from "react-icons/tb";
 import { MdOutlineScience } from "react-icons/md";
-import { Link, Form } from "react-router-dom";
+import { Link, Form, useOutletContext } from "react-router-dom";
 import Wrapper from "../assets/wrappers/Job";
 import ProjectInfo from "./ProjectInfo";
 import day from "dayjs";
@@ -30,14 +35,32 @@ const Project = ({
   projectTitle,
   siteType,
   createdAt,
+  updatedAt,
   chemicals,
+  createdBy,
   contractType,
+  projectManager,
+  contractValue,
+  designLead,
+  spm,
+  client,
+  location,
+  updatedName,
+  addedName,
 }) => {
-  const date = day(createdAt).format("DD MMM YYYY");
+  const convertNumbertoPounds = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "GBP",
+  });
+
+  const dateCreated = day(createdAt).format("DD MMM YYYY");
+  const dateUpdated = day(updatedAt).format("DD MMM YYYY");
+  const { user } = useOutletContext();
   let chemicalList = chemicals.join(", ");
   if (chemicals.length === 0) {
     chemicalList = "No Chemicals Listed";
   }
+
   return (
     <Wrapper>
       <header>
@@ -49,49 +72,77 @@ const Project = ({
       </header>
       <div className="content">
         <div className="content-center">
-          <ProjectInfo icon={<MdOutlineScience />} text={chemicalList} />
-
-          <ProjectInfo icon={<GiWaterTank />} text={siteType} />
+          {/* <ProjectInfo
+            icon={<MdOutlineScience />}
+            text={chemicalList}
+            style={{ lineHeight: 1.4 }}
+          /> */}
+          <ProjectInfo icon={<FaLocationArrow />} text={` ${location}`} />
+          <ProjectInfo icon={<GiWaterTower />} text={siteType} />
           <ProjectInfo
             icon={<FaPersonCircleCheck />}
-            text={"client: Scottish Water"}
+            text={`client: ${client}`}
           />
           <ProjectInfo icon={<FaFileContract />} text={contractType} />
           <ProjectInfo
             icon={<FaPersonWalkingWithCane />}
-            text={"PM: Steve Creene"}
+            text={`PM: ${projectManager}`}
+          />
+          <ProjectInfo icon={<FaPersonHarassing />} text={`SPM: ${spm}`} />
+
+          {/* <ProjectInfo
+            icon={<FaPersonDrowning />}
+            text={`Design Lead: ${designLead}`}
+          /> */}
+
+          {/* <ProjectInfo
+            icon={<BsBarChartSteps />}
+            text={`project stage: ${projectStatus}`}
+          /> */}
+          <ProjectInfo
+            icon={<TbMoneybag />}
+            text={
+              contractValue
+                ? `Contract value: ${convertNumbertoPounds.format(
+                    Number(contractValue)
+                  )}`
+                : "Contract Value: No Value"
+            }
           />
           <ProjectInfo
-            icon={<FaPersonHarassing />}
-            text={"SPM: Andrew Knight"}
+            icon={<FaCalendarAlt />}
+            text={`Added: ${dateCreated} ${
+              addedName > "" ? `(by ${addedName})` : ""
+            }`}
           />
 
           <ProjectInfo
-            icon={<FaPersonDrowning />}
-            text={"Design Lead: Stuart Parker"}
-          />
-          <ProjectInfo icon={<IoOptions />} text={"Project Type: H&S"} />
-          <ProjectInfo
-            icon={<PiProjectorScreenLight />}
-            text={`project stage: ${projectStatus}`}
-          />
-          <ProjectInfo
-            icon={<TbMoneybag />}
-            text={`Contract value: £1,000,000`}
-          />
-          <ProjectInfo icon={<FaCalendarAlt />} text={`added:  ${date}`} />
-          <ProjectInfo
+            style={{ lineHeight: 1.3 }}
             icon={<FaCalendarAlt />}
-            text={`Project Completed: ${date}`}
+            text={`Updated: ${dateUpdated} ${
+              updatedName > "" ? `(by ${updatedName})` : ""
+            }`}
           />
         </div>
         <footer className="actions">
-          <Link to={`../edit-project/${_id}`} className="btn edit-btn">
-            Edit
+          {user.name + " " + user.lastName === projectManager ||
+          user.role === "admin" ? (
+            <Link to={`../edit-project/${_id}`} className="btn edit-btn">
+              Edit
+            </Link>
+          ) : (
+            ""
+          )}
+          <Link to={`../more-info/${_id}`} className="btn edit-btn">
+            More Info
           </Link>
-          <Link className="btn edit-btn">More Info</Link>
+
           <Form>
-            <button type="submit" className="btn delete-btn">
+            <button
+              type="submit"
+              className="btn delete-btn"
+              style={{ backgroundColor: "red" }}
+            >
               Delete
             </button>
           </Form>

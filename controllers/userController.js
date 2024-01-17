@@ -2,6 +2,12 @@ import { StatusCodes } from "http-status-codes";
 import User from "../models/userModel.js";
 import Project from "../models/projectModel.js";
 
+export const getUser = async (req, res) => {
+  const user = await User.findOne({ _id: req.body });
+  const userWithoutPassword = user.toJSON();
+  res.status(StatusCodes.OK).json({ user: userWithoutPassword });
+};
+
 export const getCurrentUser = async (req, res) => {
   const user = await User.findOne({ _id: req.user.userId });
   const userWithoutPassword = user.toJSON();

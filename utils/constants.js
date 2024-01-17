@@ -1,7 +1,7 @@
 export const SITE_TYPE = {
-  WTW: "WTW",
-  WwTW: "WwTW",
-  SR: "SR",
+  WTW: "Water Treatment Works",
+  WwTW: "Waste Water Treatment Works",
+  SR: "Service Reservoir",
 };
 
 export const CONTRACT_TYPE = {

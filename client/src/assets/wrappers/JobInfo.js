@@ -4,8 +4,8 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   .job-icon {
-    font-size: 2rem;
-    margin-right: 1rem;
+    font-size: 1.5rem;
+    margin-right: 0.8rem;
     display: flex;
     align-items: center;
     svg {
@@ -15,6 +15,7 @@ const Wrapper = styled.div`
   .job-text {
     text-transform: capitalize;
     letter-spacing: var(--letter-spacing);
+    font-size: 0.8rem;
   }
 `;
 export default Wrapper;

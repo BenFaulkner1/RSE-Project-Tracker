@@ -4,15 +4,20 @@ import {
   AddProject,
   Admin,
   AllProjects,
+  Archive,
   DashboardLayout,
   EditProject,
   Error,
   HomeLayout,
   Landing,
   Login,
+  MyProjects,
+  MyProjectStats,
   Profile,
   Register,
   Stats,
+  Tracker,
+  MoreInfo,
 } from "./pages";
 
 import { action as registerAction } from "./pages/Register";
@@ -22,6 +27,9 @@ import { action as addProjectAction } from "./pages/AddProject";
 import { loader as allProjectsLoader } from "./pages/AllProjects";
 import { loader as editProjectLoader } from "./pages/EditProject";
 import { action as editProjectAction } from "./pages/EditProject";
+import { loader as statsLoader } from "./pages/Stats";
+import { loader as ganttLoader } from "./pages/Tracker";
+import { loader as moreInfoLoader } from "./pages/MoreInfo";
 
 export const checkDefaultTheme = () => {
   const isDarkTheme = localStorage.getItem("darkTheme") === "true";
@@ -66,11 +74,26 @@ const router = createBrowserRouter([
       {
         path: "stats",
         element: <Stats />,
+        loader: statsLoader,
       },
+      {
+        path: "tracker",
+        element: <Tracker />,
+        loader: ganttLoader,
+      },
+      {
+        path: "my-project-stats",
+        element: <MyProjectStats />,
+      },
+
       {
         path: "all-projects",
         element: <AllProjects />,
         loader: allProjectsLoader,
+      },
+      {
+        path: "my-projects",
+        element: <MyProjects />,
       },
       {
         path: "profile",
@@ -81,10 +104,19 @@ const router = createBrowserRouter([
         element: <Admin />,
       },
       {
+        path: "archive",
+        element: <Archive />,
+      },
+      {
         path: "edit-project/:id",
         element: <EditProject />,
         loader: editProjectLoader,
         action: editProjectAction,
+      },
+      {
+        path: "more-info/:id",
+        element: <MoreInfo />,
+        loader: moreInfoLoader,
       },
     ],
   },

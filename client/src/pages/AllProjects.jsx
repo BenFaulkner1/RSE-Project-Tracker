@@ -1,30 +1,53 @@
 import React from "react";
 import { toast } from "react-toastify";
 import customFetch from "../utils/customFetch";
-import { useLoaderData } from "react-router-dom";
+import {
+  useLoaderData,
+  useNavigate,
+  useNavigation,
+  useOutletContext,
+} from "react-router-dom";
 import { useContext, createContext } from "react";
 import { ProjectsContainer, SearchContainer } from "../components";
+import { Loading } from "../components";
+const AllProjectsContext = createContext();
 
 export const loader = async ({ request }) => {
   try {
-    const { data } = await customFetch.get("/projects");
+    const params = Object.fromEntries([
+      ...new URL(request.url).searchParams.entries(),
+    ]);
 
-    return { data };
+    const { data } = await customFetch.get("/projects", {
+      params,
+    });
+
+    return {
+      data,
+      searchValues: { ...params },
+    };
   } catch (error) {
-    toast.error(error?.response?.data?.msg);
+    toast.error(error.response.data.msg);
     return error;
   }
 };
 
-const AllProjectsContext = createContext();
-
 const AllProjects = () => {
-  const { data } = useLoaderData();
-  console.log("hillbilly:", data);
+  const navigation = useNavigation();
+  const isPageLoading = navigation.state === "loading";
+  const { data, searchValues } = useLoaderData();
+  console.log(data);
+
   return (
-    <AllProjectsContext.Provider value={{ data }}>
-      <SearchContainer />
-      <ProjectsContainer />
+    <AllProjectsContext.Provider value={{ data, searchValues }}>
+      {isPageLoading ? (
+        <Loading />
+      ) : (
+        <>
+          <SearchContainer />
+          <ProjectsContainer />
+        </>
+      )}
     </AllProjectsContext.Provider>
   );
 };
