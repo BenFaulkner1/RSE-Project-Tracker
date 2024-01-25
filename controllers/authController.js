@@ -51,8 +51,9 @@ export const register = async (req, res) => {
 
 export const verifyEmail = async (req, res) => {
   const { verificationToken, email } = req.body;
-console.log("bla bla" user.verificationToken);
+
   const user = await User.findOne({ email });
+  console.log("bla bla", user.verificationToken);
 
   if (!user) {
     throw new UnauthenticatedError("verification failed");
@@ -61,8 +62,6 @@ console.log("bla bla" user.verificationToken);
   if (user.verificationToken !== verificationToken) {
     throw new UnauthenticatedError("verification failed");
   }
-
-  
 
   user.isVerified = true;
   user.verified = Date.now();
