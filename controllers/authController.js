@@ -34,7 +34,7 @@ export const register = async (req, res) => {
   const user = await User.create({ ...req.body, verificationToken });
 
   // const origin = "http://localhost:5173";
-  const origin = "https://rse-project-tracker.onrender.com";
+  const origin = "https://wtc-project-tracker.onrender.com";
 
   await sendVerificationEmail({
     name: user.name,
@@ -133,7 +133,7 @@ export const forgotPassword = async (req, res) => {
     // send email
 
     //const origin = "http://localhost:5173";
-    const origin = "https://rse-project-tracker.onrender.com";
+    const origin = "https://wtc-project-tracker.onrender.com";
     await sendResetPasswordEmail({
       name: user.name,
       email: user.email,
