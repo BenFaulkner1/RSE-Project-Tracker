@@ -1,6 +1,7 @@
 import "../../node_modules/@syncfusion/ej2-base";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "../index.css";
 import {
   GanttComponent,
@@ -32,8 +33,10 @@ export const loader = async ({ request, params }) => {
 };
 
 function formatCourseDate(date) {
-  const dateObj = new Date(date + "T00:00:00");
-  return new Intl.DateTimeFormat("en-US").format(dateObj);
+  if (date !== "") {
+    const dateObj = new Date(date + "T00:00:00");
+    return new Intl.DateTimeFormat("en-US").format(dateObj);
+  }
 }
 
 function formatDate(date, format) {
@@ -93,11 +96,7 @@ const checkIfTrue = (
       TaskID: indexValue + 1 + "." + (subIndexValue + 1.1),
       TaskName: taskName1,
       StartDate: item,
-      // new Date(formatCourseDate(item)).getTime() -
-      //   new Date(new Date().toLocaleDateString()).getTime() <
-      // 0
-      //   ? new Date()
-      //   : item,
+
       Duration: getDuration(item, item2),
     });
   }
@@ -213,12 +212,12 @@ function GanttChart() {
   }
 
   return (
-    <div style={{ position: "fixed" }}>
+    <div className="ganttChart" style={{ position: "fixed" }}>
       <GanttComponent
         dataSource={GanttData}
         taskFields={taskFields}
-        height="600px"
-        width="1350px"
+        height="100%"
+        width="100%"
         splitterSettings={splitterSettings}
         allowResizing={false}
         timelineSettings={timelineSettings}

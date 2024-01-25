@@ -10,14 +10,21 @@ import cookieParser from "cookie-parser";
 import userRouter from "./router/userRouter.js";
 import sendEmail from "./controllers/sendEmail.js";
 
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+import path from "path";
+
 dotenv.config();
 
 const app = express();
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
+app.use(express.static(path.resolve(__dirname, "./public")));
 app.use(cookieParser());
 app.use(express.json());
 
@@ -26,6 +33,10 @@ app.post("/api/v1/send", sendEmail);
 app.use("/api/v1/projects", authenticateUser, projectRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/auth", authRouter);
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "./public", "index.html"));
+});
 
 app.use("*", (req, res) => {
   res.status(404).json({ msg: "not found" });

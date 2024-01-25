@@ -1,13 +1,9 @@
-import {
-  Link,
-  Form,
-  redirect,
-  useNavigation,
-  useActionData,
-} from "react-router-dom";
+import React from "react";
+import { Form, Link, redirect, useNavigation } from "react-router-dom";
+import FormRow from "../components/FormRow";
 import Wrapper from "../assets/wrappers/RegisterAndLoginPage";
-import { FormRow, Logo } from "../components";
 import customFetch from "../utils/customFetch";
+import { Logo } from "../components";
 import { toast } from "react-toastify";
 
 export const action = async ({ request }) => {
@@ -15,16 +11,16 @@ export const action = async ({ request }) => {
   const data = Object.fromEntries(formData);
 
   try {
-    await customFetch.post("/auth/login", data);
-    toast.success("Login successful");
-    return redirect("/dashboard");
+    await customFetch.post("/auth/forgot-password", data);
+    toast.success("Please check your email for reset password link");
+    return redirect("/check-email");
   } catch (error) {
     toast.error(error?.response?.data?.msg);
     return error;
   }
 };
 
-const Login = () => {
+const ForgotPassword = () => {
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
 
@@ -32,24 +28,19 @@ const Login = () => {
     <Wrapper>
       <Form method="Post" className="form">
         <Logo />
-        <h4>Login</h4>
+        <h4>Forgot Password</h4>
         <FormRow type="email" name="email" />
-        <FormRow type="password" name="password" />
+
         <button type="submit" className="btn btn-block" disabled={isSubmitting}>
-          {isSubmitting ? "submitting..." : "submit"}
+          {isSubmitting
+            ? "Getting Reset Password Link..."
+            : "Get Reset Password Link"}
         </button>
-        {/* <button type="button" className="btn btn-block">
-          explore the app
-        </button> */}
+
         <p>
-          Not a member yet?
-          <Link to="/register" className="member-btn">
-            Register
-          </Link>
-        </p>
-        <p>
-          <Link to="/forgot-password" className="member-btn">
-            Forgot Password?
+          Just remembered your password?
+          <Link to="/login" className="member-btn">
+            Login
           </Link>
         </p>
       </Form>
@@ -57,4 +48,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ForgotPassword;

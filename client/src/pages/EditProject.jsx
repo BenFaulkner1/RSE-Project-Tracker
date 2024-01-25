@@ -49,7 +49,7 @@ let people = [
   "Austin Watson",
   "Barry Dolan",
   "Barry Middelton",
-  "Ben Faulkner",
+  "Benjamin Faulkner",
   "Ben Nicolson",
   "Ben Wardrop",
   "Ben Young",
@@ -149,8 +149,9 @@ let chemicals;
 let newList;
 let newListArray2;
 let newWorkItemArray;
-
+let workItemArray;
 let nameOfUser;
+let initialList;
 
 export const loader = async ({ request, params }) => {
   try {
@@ -160,11 +161,6 @@ export const loader = async ({ request, params }) => {
     personnel = data.project.projectPersonnel;
     console.log("fs", data.projectPersonnel);
     console.log("fs", data);
-
-    // const userUpdated = await customFetch.post(`/users/user`, {
-    //   _id: data.project.updatedBy,
-    // });
-    // console.log("Answer", userUpdated);
 
     return { data };
   } catch (error) {
@@ -178,7 +174,7 @@ export const action = async ({ request, params }) => {
   const data = Object.fromEntries(formData);
 
   if (data.projectNumber === "") {
-    toast.error("please enter a bloody project number");
+    toast.error("please enter a project number");
     return null;
   }
 
@@ -203,20 +199,34 @@ export const action = async ({ request, params }) => {
     );
     return null;
   }
+  let chemicalboxes = true;
+  if (newListArray2 === undefined) {
+    initialList.map((item) => {
+      if (item.status === false) {
+        toast.error(
+          "Please ensure all Chemical/ Work Items have confirmed status before submitting project"
+        );
 
-  newListArray2.map((item) => {
-    console.log("item", item);
-    if (item.status === false) {
-      toast.error(
-        "Please ensure all Chemical/ Work Items have confirmed status before submitting project"
-      );
+        window.scrollTo(0, document.body.scrollHeight);
+        chemicalboxes = false;
+      }
+    });
+  } else {
+    newListArray2.map((item) => {
+      if (item.status === false) {
+        toast.error(
+          "Please ensure all Chemical/ Work Items have confirmed status before submitting project"
+        );
 
-      window.scrollTo(0, document.body.scrollHeight);
-      return null;
-    }
-  });
+        window.scrollTo(0, document.body.scrollHeight);
+        chemicalboxes = false;
+      }
+    });
+  }
 
-  console.log(personnel);
+  if (chemicalboxes === false) {
+    return null;
+  }
 
   if (personnel.indexOf(data.projectManager) === -1) {
     personnel.push(data.projectManager);
@@ -265,10 +275,13 @@ export const action = async ({ request, params }) => {
   delete data.poaCatchpot;
   delete data.tankerFillKiosk;
 
-  data.workItems = newWorkItemArray;
-  data.updatedName = nameOfUser;
+  if (newWorkItemArray === undefined) {
+    data.workItems = workItemArray;
+  } else {
+    data.workItems = newWorkItemArray;
+  }
 
-  console.log("DWI", data.workItems);
+  data.updatedName = nameOfUser;
 
   try {
     await customFetch.patch(`/projects/${params.id}`, data);
@@ -284,21 +297,20 @@ const EditProject = () => {
   const { user } = useOutletContext();
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
-  console.log("Hidy", useLoaderData());
+
   const { data } = useLoaderData();
   const { project } = data;
-  //const { userUpdated } = useLoaderData();
-  console.log("userU", user.name + " " + user.lastName);
+
   nameOfUser = user.name + " " + user.lastName;
 
-  let initialList = [];
+  initialList = [];
   project.workItems.map((workItem) => {
     initialList.push({ id: nanoid(), status: false });
   });
 
   newList = initialList;
 
-  let workItemArray = project.workItems;
+  workItemArray = project.workItems;
 
   const [chemicalNumber, setChemicalNumber] = useState(initialList);
   const [workItemArray2, setWorkItemArray2] = useState(workItemArray);

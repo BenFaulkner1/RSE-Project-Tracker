@@ -12,14 +12,14 @@ const links = [
   { text: "Gantt Chart", path: "tracker", icon: <FaChartGantt /> },
   { text: "all projects", path: "all-projects", icon: <MdQueryStats /> },
   { text: "project stats", path: "stats", icon: <IoBarChartSharp /> },
-  { text: "profile", path: "profile", icon: <ImProfile /> },
-  { text: "my Projects", path: "my-projects", icon: <MdPerson /> },
-  {
-    text: "my project stats",
-    path: "my-project-stats",
-    icon: <IoBarChartSharp />,
-  },
-  { text: "admin", path: "admin", icon: <MdAdminPanelSettings /> },
+  // { text: "profile", path: "profile", icon: <ImProfile /> },
+  // { text: "my Projects", path: "my-projects", icon: <MdPerson /> },
+  // {
+  //   text: "my project stats",
+  //   path: "my-project-stats",
+  //   icon: <IoBarChartSharp />,
+  // },
+  // { text: "admin", path: "admin", icon: <MdAdminPanelSettings /> },
   { text: "archive", path: "archive", icon: <FaArchive /> },
 ];
 

@@ -10,13 +10,21 @@ const UserSchema = new mongoose.Schema({
   },
   location: {
     type: String,
-    default: "Edinburgh",
   },
   role: {
     type: String,
     enum: ["user", "project manager", "admin"],
     default: "user",
   },
+  verificationToken: String,
+  isVerified: {
+    type: Boolean,
+    default: false,
+  },
+  verified: Date,
+  passwordToken: String,
+
+  passwordTokenExpirationDate: Date,
 });
 
 // toJSON is just a made up name

@@ -119,7 +119,7 @@ const MoreInfo = () => {
               <ProjectInfo
                 icon={<MdOutlineScience />}
                 text={chemicalList}
-                style={{ fontSize: 15, lineHeight: 1.4 }}
+                style={{ lineHeight: 1.4 }}
               />
               <ProjectInfo icon={<FaLocationArrow />} text={` ${location}`} />
               <ProjectInfo icon={<GiWaterTower />} text={siteType} />
@@ -164,11 +164,11 @@ const MoreInfo = () => {
               <ProjectInfo
                 style={{ lineHeight: 1.3 }}
                 icon={<FaCalendarAlt />}
-                text={`Updated: ${dateUpdated} ${
-                  updatedName > "" ? `(by ${updatedName})` : ""
-                }`}
+                text={`Updated: ${
+                  dateUpdated === dateCreated ? "N/A" : dateUpdated
+                } ${updatedName > "" ? `(by ${updatedName})` : ""}`}
               />
-              <ProjectInfo
+              {/* <ProjectInfo
                 style={{ lineHeight: 1.3 }}
                 icon={<PiPersonSimpleRunBold />}
                 text={"project start: " + projectStartMod}
@@ -177,7 +177,7 @@ const MoreInfo = () => {
                 style={{ lineHeight: 1.3 }}
                 icon={<GiFinishLine />}
                 text={"project finish: " + projectEndMod}
-              />
+              /> */}
               <ProjectInfo
                 style={{ lineHeight: 1.3 }}
                 icon={<FaPen />}

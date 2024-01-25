@@ -13,6 +13,45 @@
   border-radius: 8px !important;
 }
 
+.ganttChart {
+  width: 1500px;
+  height: 600px;
+}
+
+@media (max-width: 1800px) {
+  .ganttChart {
+    width: 1400px;
+  }
+}
+@media (max-width: 1700px) {
+  .ganttChart {
+    width: 1250px;
+  }
+}
+@media (max-width: 1600px) {
+  .ganttChart {
+    width: 1150px;
+    height: 400px;
+  }
+}
+
+@media (max-width: 1400px) {
+  .ganttChart {
+    width: 1000px;
+  }
+}
+@media (max-width: 1200px) {
+  .ganttChart {
+    width: 900px;
+  }
+}
+
+@media (max-width: 900px) {
+  .ganttChart {
+    width: 800px;
+  }
+}
+
 /* .dark-theme {
   --text-color: var(--dark-mode-text-color);
   --background-color: var(--dark-mode-bg-color);
@@ -199,6 +238,7 @@ body {
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   font-weight: 400;
   line-height: 1;
+  overflow-x: scroll;
 }
 p {
   margin: 0;
@@ -391,9 +431,10 @@ button:disabled {
   text-transform: capitalize;
 }
 .logo {
-  width: 180px;
+  width: 160px;
   margin-top: 3rem;
 }
+
 /* alert */
 
 @keyframes spinner {

@@ -89,7 +89,9 @@ const ChemicalComponent = ({
 
   const [btnState, setBtnState] = useState(false);
   const [workItemName, setWorkItemName] = useState(
-    workItemArray2[blob - 1].name
+    workItemArray2[blob - 1].name !== undefined
+      ? workItemArray2[blob - 1].name
+      : ""
   );
   const [siteSurveyStart, setSiteSurveyStart] = useState("");
   const [siteSurveyEnd, setSiteSurveyEnd] = useState("");
@@ -129,7 +131,11 @@ const ChemicalComponent = ({
 
                 updateStatusArray(blob - 1, false);
               }}
-              defaultValue={workItemArray2[blob - 1].name}
+              defaultValue={
+                workItemArray2[blob - 1].name !== undefined
+                  ? workItemArray2[blob - 1].name
+                  : ""
+              }
             />
           </div>
 

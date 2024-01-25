@@ -18,6 +18,11 @@ import {
   Stats,
   Tracker,
   MoreInfo,
+  VerifyEmail,
+  ForgotPassword,
+  ResetPassword,
+  CheckEmail,
+  CheckVerificationEmail,
 } from "./pages";
 
 import { action as registerAction } from "./pages/Register";
@@ -30,6 +35,9 @@ import { action as editProjectAction } from "./pages/EditProject";
 import { loader as statsLoader } from "./pages/Stats";
 import { loader as ganttLoader } from "./pages/Tracker";
 import { loader as moreInfoLoader } from "./pages/MoreInfo";
+import { action as deleteProject } from "./pages/DeleteProject";
+import { action as forgotPassword } from "./pages/ForgotPassword";
+import { action as resetPassword } from "./pages/ResetPassword";
 
 export const checkDefaultTheme = () => {
   const isDarkTheme = localStorage.getItem("darkTheme") === "true";
@@ -60,6 +68,33 @@ const router = createBrowserRouter([
     path: "/login",
     element: <Login />,
     action: loginAction,
+  },
+  {
+    path: "/check-email",
+    element: <CheckEmail />,
+  },
+  {
+    path: "/check-verification-email",
+    element: <CheckVerificationEmail />,
+  },
+  {
+    path: "/forgot-password",
+    element: <ForgotPassword />,
+    action: forgotPassword,
+  },
+  {
+    path: "/reset-password",
+    element: <ResetPassword />,
+    action: resetPassword,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+    action: loginAction,
+  },
+  {
+    path: "/user/verify-email",
+    element: <VerifyEmail />,
   },
   {
     path: "/dashboard",
@@ -112,6 +147,11 @@ const router = createBrowserRouter([
         element: <EditProject />,
         loader: editProjectLoader,
         action: editProjectAction,
+      },
+      {
+        path: "delete-project/:id",
+
+        action: deleteProject,
       },
       {
         path: "more-info/:id",

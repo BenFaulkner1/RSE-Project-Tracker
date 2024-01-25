@@ -9,11 +9,13 @@ import {
   CartesianGrid,
   Tooltip,
   Cell,
+  Label,
+  LabelList,
 } from "recharts";
 
 const data01 = [
   {
-    name: "Group A",
+    name: "Design",
     value: 400,
   },
   {
@@ -39,7 +41,7 @@ const data01 = [
 ];
 const data02 = [
   {
-    name: "Group A",
+    name: "Design",
     value: 2400,
   },
   {
@@ -73,26 +75,50 @@ const COLORS = [
   "rgb(68,0,23)",
 ];
 
-const BarChart = () => {
+const BarChart = ({ data }) => {
+  console.log("das blob", data);
+  console.log(typeof data);
+  const kys = Object.keys(data);
+  const kys2 = Object.values(data);
+  console.log(kys);
+  const blob = kys.map((item, index) => {
+    return { name: kys[index], value: kys2[index] };
+  });
+
+  console.log(blob);
   return (
     <ResponsiveContainer width="100%" height={300}>
       <PieChart>
         <Pie
-          data={data01}
+          data={blob}
           dataKey="value"
           nameKey="name"
           cx="50%"
           cy="50%"
-          outerRadius={150}
+          outerRadius={140}
           fill="#8884d8"
-          label={{ position: "left" }}
-          onMouseEnter={() => {
-            alert("hello");
-          }}
         >
           {data02.map((entry, index) => (
             <Cell fill={COLORS[index % COLORS.length]} />
           ))}
+          {/* <Label value="pages"></Label> */}
+          <LabelList
+            dataKey="name"
+            position="outside"
+            style={{
+              fontSize: 16,
+              letterSpacing: 4,
+              fontFamily: "Arial",
+              textTransform: "capitalize",
+
+              stroke: "rgba(153, 30, 98, 0.411)",
+            }}
+          />
+          <LabelList
+            dataKey="value"
+            position="inside"
+            style={{ fontSize: 16 }}
+          />
         </Pie>
       </PieChart>
     </ResponsiveContainer>

@@ -1,14 +1,17 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
-import logo from "../assets/images/RSE Logo.png";
+
 import Wrapper from "../assets/wrappers/landingPage.js";
 import projectTracker from "../assets/images/main.svg";
+import Logo from "../components/Logo.jsx";
 
 const Landing = () => {
   return (
     <Wrapper>
       <nav>
-        <img src={logo} alt="" className="logo2" />
+        <Logo
+          style={{ position: "absolute", left: 20, top: -40, width: 200 }}
+        />
       </nav>
       <div className="container page">
         <div className="info">
@@ -23,7 +26,7 @@ const Landing = () => {
             Register
           </Link>
           <Link to="/login" className="btn">
-            Login / Demo User
+            Login
           </Link>
         </div>
         <img src={projectTracker} alt="job hunt" className="img main-img" />

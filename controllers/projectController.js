@@ -116,7 +116,7 @@ export const getAllProjects = async (req, res) => {
 
   // Set up pagination
   const page = Number(req.query.page) || 1;
-  const limit = Number(req.query.limit) || 20;
+  const limit = Number(req.query.limit) || 26;
   const skip = (page - 1) * limit;
 
   // const projects = await Project.find(queryObject);
@@ -170,11 +170,32 @@ export const deleteProject = async (req, res) => {
 
 export const showStats = async (req, res) => {
   let stats = await Project.aggregate([
-    { $match: { createdBy: new mongoose.Types.ObjectId(req.user.userId) } },
+    // { $match: { createdBy: new mongoose.Types.ObjectId(req.user.userId) } },
     { $group: { _id: "$projectStatus", count: { $sum: 1 } } },
   ]);
 
+  let locationStats = await Project.aggregate([
+    { $group: { _id: "$location", count: { $sum: 1 } } },
+  ]);
+
+  let totalProjects = await Project.countDocuments();
+  console.log(totalProjects);
+
+  console.log("first stats", stats);
+  console.log("location stats", locationStats);
+
   stats = stats.reduce((acc, curr) => {
+    const { _id: title, count } = curr;
+    acc[title] = count;
+    return acc;
+  }, {});
+  // The stats array goes through the reduce function. Each item in the array runs through the function.
+  // 'curr' refers to the current value. The curr value is added to the acc for the next round
+  // So in this example, curr is an object within an array - {_id: title, count} e.g. {_id: 'Workshop', count: 2}
+  // When we put this through the function above, we first destructure count and _id (rename it title)
+  // acc, which for the first round
+
+  locationStats = locationStats.reduce((acc, curr) => {
     const { _id: title, count } = curr;
     acc[title] = count;
     return acc;
@@ -185,18 +206,26 @@ export const showStats = async (req, res) => {
   // the acc object is getting a property of title added to it so acc = {'design': 19}
   // this is repeated and an object with multiple properties is created
   // the first object goes through the reducer, we pull out some values from the initial
-  console.log(stats);
+  console.log("stats", stats);
+  console.log("location stats", locationStats);
 
   const defaultStats = {
-    psc: stats.psc || 0,
-    dAndB: stats.dAndB || 0,
-    construction: stats.construction || 0,
+    Design: stats.Design || 3,
+    Workshop: stats.Workshop || 0,
+    Site: stats["Site"] || 0,
+    "Site Survey": stats["Site Survey"] || 0,
+  };
+
+  const defaultLocationStats = {
+    ScotlandSouth: locationStats["Scotland South"] || 3,
+    Workshop: locationStats["Aberdeen and North East"] || 0,
+    Site: stats.Site || 0,
   };
 
   // getting the monthly contract amounts for a specific user, grouping them by year and month, sorting them by latest year and month and limiting it to 6 responses
 
   let monthlyContractAmounts = await Project.aggregate([
-    { $match: { createdBy: new mongoose.Types.ObjectId(req.user.userId) } },
+    // { $match: { createdBy: new mongoose.Types.ObjectId(req.user.userId) } },
     {
       $group: {
         _id: { year: { $year: "$createdAt" }, month: { $month: "$createdAt" } },
@@ -206,6 +235,17 @@ export const showStats = async (req, res) => {
     { $sort: { "_id.year": -1, "id.month": -1 } },
     { $limit: 6 },
   ]);
+
+  let yourLiveProjects = await Project.aggregate([
+    {
+      $match: {
+        projectPersonnel: { $eq: req.user.name + " " + req.user.lastName },
+      },
+    },
+  ]);
+
+  console.log("dgfd", req.user);
+  console.log("dgfd", yourLiveProjects.length);
 
   monthlyContractAmounts = monthlyContractAmounts
     .map((item) => {
@@ -222,19 +262,11 @@ export const showStats = async (req, res) => {
     })
     .reverse();
 
-  // let monthlyContractAmounts = [
-  //   {
-  //     date: "Dec 23",
-  //     count: 11,
-  //   },
-  //   {
-  //     date: "Jan 24",
-  //     count: 14,
-  //   },
-  //   {
-  //     date: "Feb 24",
-  //     count: 17,
-  //   },
-  // ];
-  res.status(StatusCodes.OK).json({ defaultStats, monthlyContractAmounts });
+  res.status(StatusCodes.OK).json({
+    defaultStats,
+    monthlyContractAmounts,
+    defaultLocationStats,
+    totalProjects,
+    yourLiveProjects,
+  });
 };

@@ -11,8 +11,10 @@ export const action = async ({ request }) => {
   const data = Object.fromEntries(formData);
   try {
     await customFetch.post("/auth/register", data);
-    toast.success("Registration successful");
-    return redirect("/login");
+    toast.success(
+      "Registration successful. Please check your email to verify account"
+    );
+    return redirect("/check-verification-email");
   } catch (error) {
     toast.error(error?.response?.data?.msg);
     return error;
@@ -30,7 +32,7 @@ const Register = () => {
         <div className="form-row">
           <FormRow type="text" name="name" />
           <FormRow type="text" name="lastName" labelText="last name" />
-          <FormRow type="text" name="location" />
+
           <FormRow type="email" name="email" />
           <FormRow type="password" name="password" />
         </div>

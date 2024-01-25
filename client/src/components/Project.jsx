@@ -26,6 +26,7 @@ import Wrapper from "../assets/wrappers/Job";
 import ProjectInfo from "./ProjectInfo";
 import day from "dayjs";
 import advancedFormat from "dayjs/plugin/advancedFormat";
+import { created } from "@syncfusion/ej2-react-grids";
 day.extend(advancedFormat);
 
 const Project = ({
@@ -53,8 +54,8 @@ const Project = ({
     currency: "GBP",
   });
 
-  const dateCreated = day(createdAt).format("DD MMM YYYY");
-  const dateUpdated = day(updatedAt).format("DD MMM YYYY");
+  const dateCreated = day(createdAt).format("DD MMM YYYY hh:mm");
+  const dateUpdated = day(updatedAt).format("DD MMM YYYY hh:mm");
   const { user } = useOutletContext();
   let chemicalList = chemicals.join(", ");
   if (chemicals.length === 0) {
@@ -110,6 +111,7 @@ const Project = ({
             }
           />
           <ProjectInfo
+            style={{ lineHeight: 1.3 }}
             icon={<FaCalendarAlt />}
             text={`Added: ${dateCreated} ${
               addedName > "" ? `(by ${addedName})` : ""
@@ -119,7 +121,7 @@ const Project = ({
           <ProjectInfo
             style={{ lineHeight: 1.3 }}
             icon={<FaCalendarAlt />}
-            text={`Updated: ${dateUpdated} ${
+            text={`Updated: ${updatedAt === createdAt ? "N/A" : dateUpdated} ${
               updatedName > "" ? `(by ${updatedName})` : ""
             }`}
           />
@@ -137,7 +139,7 @@ const Project = ({
             More Info
           </Link>
 
-          <Form>
+          <Form method="post" action={`../delete-project/${_id}`}>
             <button
               type="submit"
               className="btn delete-btn"
