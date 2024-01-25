@@ -40,7 +40,7 @@ const Register = () => {
           {isSubmitting ? "submitting..." : "submit"}
         </button>
         <p>
-          Already a member?
+          Are You Already a member?
           <Link to="/login" className="member-btn">
             Login
           </Link>
