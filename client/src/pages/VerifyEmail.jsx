@@ -41,7 +41,7 @@ const VerifyEmail = () => {
   if (error) {
     return (
       //<Wrapper className="page">
-      <h4>There was an error, please double check your verification link </h4>
+      <h4>There was an error, please double check your verification link. </h4>
       //</Wrapper>
     );
   }
