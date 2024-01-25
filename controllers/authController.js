@@ -33,7 +33,8 @@ export const register = async (req, res) => {
 
   const user = await User.create({ ...req.body, verificationToken });
 
-  const origin = "http://localhost:5100";
+  // const origin = "http://localhost:5173";
+  const origin = "https://rse-project-tracker.onrender.com";
 
   await sendVerificationEmail({
     name: user.name,
