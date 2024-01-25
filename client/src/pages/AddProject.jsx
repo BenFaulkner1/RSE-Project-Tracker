@@ -101,9 +101,6 @@ export const action = async ({ request }) => {
   data.workItems = newWorkItemArray;
   data.addedName = addedName;
 
-  console.log("data", data);
-  console.log("WI", workItemArray);
-
   projectNumber.value = data.projectNumber;
 
   try {
@@ -128,7 +125,6 @@ export const action = async ({ request }) => {
 
     return redirect("all-projects");
   } catch (error) {
-    console.log(error);
     toast.error(error?.response?.data?.msg);
     return error;
   }
@@ -194,7 +190,6 @@ const AddProject = () => {
     setNewListArray([...newList]);
     workItemArray.push(workItemObject);
     newWorkItemArray = workItemArray;
-    console.log("WIA", workItemArray);
 
     setWorkItemArray2([...workItemArray]);
     newWorkItemArray = workItemArray2;
@@ -211,17 +206,11 @@ const AddProject = () => {
       value: value,
     });
     newWorkItemArray = workItemArray;
-    console.log("fuckety", workItemArray);
   };
 
   const removeItem = (id) => {
-    console.log("blib", chemicalNumber);
-    console.log(id);
-
     const newArrayMan = chemicalNumber.filter((chemical) => chemical.id !== id);
 
-    console.log("blib2", chemicalNumber);
-    console.log("NAMan", newArrayMan);
     newList = newArrayMan;
     newWorkItemArray = workItemArray2;
 
@@ -704,8 +693,6 @@ const AddProject = () => {
         </div>
 
         {chemicalNumber.map((item, index) => {
-          console.log(item);
-          console.log(chemicalNumber);
           return (
             <ChemicalComponent
               key={item.id}

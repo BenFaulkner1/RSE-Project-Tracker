@@ -48,7 +48,6 @@ import { MdOutlineScience } from "react-icons/md";
 export const loader = async ({ request, params }) => {
   try {
     const { data } = await customFetch.get(`/projects/${params.id}`);
-    console.log("data", data);
 
     return data;
   } catch (error) {
@@ -59,7 +58,7 @@ export const loader = async ({ request, params }) => {
 
 const MoreInfo = () => {
   const { project } = useLoaderData();
-  console.log(project);
+
   const {
     _id,
     projectNumber,

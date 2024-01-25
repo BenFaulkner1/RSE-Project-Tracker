@@ -24,7 +24,7 @@ registerLicense(
 export const loader = async ({ request, params }) => {
   try {
     const { data } = await customFetch.get(`/projects`);
-    console.log("BLIB", data);
+
     return data;
   } catch (error) {
     toast.error(error?.response?.data?.msg);
@@ -51,29 +51,22 @@ function formatDate(date, format) {
 }
 
 const getDuration = (firstDate, secondDate) => {
-  // this is for changing the dates coming from the database to a date format the Gantt chart needs to see
   if (firstDate === "") {
     return 1;
   }
-  console.log("f", firstDate);
-  console.log("s", secondDate);
 
   const modifiedDate1 = formatCourseDate(firstDate);
-  // const modifiedDate1 = new Date().toLocaleDateString();
-  console.log("MD1", modifiedDate1);
 
   const modifiedDate2 = formatCourseDate(secondDate);
-  console.log("MD2", modifiedDate2);
 
   var date1 = new Date(modifiedDate1);
-  console.log("date1", date1);
+
   var date2 = new Date(modifiedDate2);
-  console.log("date2", date2);
+
   var duration =
     Math.ceil(date2.getTime() - date1.getTime()) / (1000 * 3600 * 24);
   var duration2 = Math.ceil(Math.abs(date2 - date1));
-  console.log("duration", duration);
-  console.log("duration2", duration2 / (1000 * 3600 * 24));
+
   return duration;
 };
 
@@ -124,7 +117,7 @@ const checkIfTrue = (
 const blob = () => {
   // alert(Date());
   const { projects } = useLoaderData();
-  console.log(projects);
+
   let newProjects = projects.map((project, index) => {
     return {
       TaskID: index + 1,
@@ -132,15 +125,6 @@ const blob = () => {
       TaskName: project.projectTitle,
 
       subtasks: project.workItems.map((workItem, subIndex) => {
-        {
-          console.log("blobaasfd", formatCourseDate(workItem.designStart));
-          console.log("blobaasfd", new Date().toLocaleDateString());
-          console.log(
-            "blobaasfd",
-            new Date(formatCourseDate(workItem.designStart)).getTime() -
-              new Date(new Date().toLocaleDateString()).getTime()
-          );
-        }
         return {
           TaskID: index + 1 + "." + (subIndex + 1),
           TaskName: workItem.name,
@@ -162,8 +146,6 @@ const blob = () => {
       }),
     };
   });
-
-  console.log("newProjects", newProjects);
 
   return newProjects;
 };
@@ -194,7 +176,6 @@ function GanttChart() {
     child: "subtasks",
   };
   function queryTaskbarInfo(args) {
-    console.log(args);
     if (args.data.TaskName === "Turriff WTW Chloramination Dosing") {
       args.baselineColor = "red";
       args.leftLabelColor = "blue";

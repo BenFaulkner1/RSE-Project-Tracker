@@ -179,10 +179,6 @@ export const showStats = async (req, res) => {
   ]);
 
   let totalProjects = await Project.countDocuments();
-  console.log(totalProjects);
-
-  console.log("first stats", stats);
-  console.log("location stats", locationStats);
 
   stats = stats.reduce((acc, curr) => {
     const { _id: title, count } = curr;
@@ -206,8 +202,6 @@ export const showStats = async (req, res) => {
   // the acc object is getting a property of title added to it so acc = {'design': 19}
   // this is repeated and an object with multiple properties is created
   // the first object goes through the reducer, we pull out some values from the initial
-  console.log("stats", stats);
-  console.log("location stats", locationStats);
 
   const defaultStats = {
     Design: stats.Design || 3,
@@ -243,9 +237,6 @@ export const showStats = async (req, res) => {
       },
     },
   ]);
-
-  console.log("dgfd", req.user);
-  console.log("dgfd", yourLiveProjects.length);
 
   monthlyContractAmounts = monthlyContractAmounts
     .map((item) => {

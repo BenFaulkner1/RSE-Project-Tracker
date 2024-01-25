@@ -155,12 +155,9 @@ let initialList;
 
 export const loader = async ({ request, params }) => {
   try {
-    console.log(params);
     const { data } = await customFetch.get(`/projects/${params.id}`);
 
     personnel = data.project.projectPersonnel;
-    console.log("fs", data.projectPersonnel);
-    console.log("fs", data);
 
     return { data };
   } catch (error) {
@@ -359,23 +356,19 @@ const EditProject = () => {
   };
 
   const removeItem = (id, workItemArrayIndex) => {
-    console.log("id", id);
-    console.log(workItemArray2);
     if (workItemArray2.length === 1) {
       alert("You must have at least one work item");
       return;
     }
     workItemArray2.splice(workItemArrayIndex, 1);
-    console.log(workItemArray2);
+
     newWorkItemArray = workItemArray2;
     const newArrayMan = chemicalNumber.filter((chemical) => chemical.id !== id);
-    console.log("Delete1", newArrayMan);
+
     newList = newArrayMan;
     setNewListArray([...newArrayMan]);
-    console.log("Delete2", newListArray);
 
     newListArray2 = newArrayMan;
-    console.log("Delete3", newListArray2);
 
     setChemicalNumber(newArrayMan);
   };

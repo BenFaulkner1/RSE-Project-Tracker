@@ -36,7 +36,6 @@ const AllProjects = () => {
   const navigation = useNavigation();
   const isPageLoading = navigation.state === "loading";
   const { data, searchValues } = useLoaderData();
-  console.log(data);
 
   return (
     <AllProjectsContext.Provider value={{ data, searchValues }}>

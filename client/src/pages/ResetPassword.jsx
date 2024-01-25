@@ -11,7 +11,6 @@ export const action = async ({ request }) => {
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
   const { password } = data;
-  console.log(token, email, password);
 
   try {
     await customFetch.post("/auth/reset-password", {
@@ -30,9 +29,6 @@ export const action = async ({ request }) => {
 const ResetPassword = () => {
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
-
-  console.log(new URLSearchParams(useLocation().search).get("token"));
-  console.log(new URLSearchParams(useLocation().search).get("email"));
 
   token = new URLSearchParams(useLocation().search).get("token");
   email = new URLSearchParams(useLocation().search).get("email");

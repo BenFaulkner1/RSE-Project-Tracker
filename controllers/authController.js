@@ -62,6 +62,8 @@ export const verifyEmail = async (req, res) => {
     throw new UnauthenticatedError("verification failed");
   }
 
+  console.log(user.verificationToken);
+
   user.isVerified = true;
   user.verified = Date.now();
   user.verificationToken = "";
@@ -115,7 +117,7 @@ export const forgotPassword = async (req, res) => {
 
   let getDomainName = email.substring(email.indexOf("@") + 1);
   let getlcDomainName = getDomainName.toLowerCase();
-  console.log(getlcDomainName);
+
   if (
     !getlcDomainName.includes("ross-eng") &&
     !getlcDomainName.includes("envoygroup")
@@ -131,7 +133,8 @@ export const forgotPassword = async (req, res) => {
     const passwordToken = crypto.randomBytes(70).toString("hex");
     // send email
 
-    const origin = "http://localhost:5173";
+    //const origin = "http://localhost:5173";
+    const origin = "https://rse-project-tracker.onrender.com";
     await sendResetPasswordEmail({
       name: user.name,
       email: user.email,
@@ -170,15 +173,11 @@ export const resetPassword = async (req, res) => {
 
   if (user) {
     const currentDate = new Date();
-    console.log("Aye 1");
 
     if (
       user.passwordToken === token &&
       user.passwordTokenExpirationDate > currentDate
     ) {
-      console.log("Aye 2");
-      console.log(user.password);
-      console.log(password);
       user.password = password;
       user.passwordToken = null;
       user.passwordTokenExpirationDate = null;

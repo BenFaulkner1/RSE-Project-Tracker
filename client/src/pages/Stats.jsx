@@ -6,7 +6,7 @@ import { useLoaderData } from "react-router-dom";
 export const loader = async () => {
   try {
     const response = await customFetch.get("/projects/stats");
-    console.log("I here", response.data);
+
     return response.data;
   } catch (error) {
     return error;
@@ -21,7 +21,7 @@ const Stats = () => {
     totalProjects,
     yourLiveProjects,
   } = useLoaderData();
-  console.log("blibdfs", monthlyContractAmounts);
+
   return (
     <>
       <StatsContainer

@@ -10,11 +10,10 @@ const VerifyEmail = () => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const query = useQuery();
-  console.log(query);
-  console.log(query.get("token"));
-  console.log(query.get("email"));
+
   const verifyToken = async () => {
     setLoading(true);
+    console.log(query.get("token"));
     try {
       const { data } = await customFetch.post("/auth/verify-email", {
         verificationToken: query.get("token"),
@@ -22,7 +21,6 @@ const VerifyEmail = () => {
       });
     } catch (error) {
       setError(true);
-      console.log(error);
     }
     setLoading(false);
   };
