@@ -65,7 +65,7 @@ export const verifyEmail = async (req, res) => {
 
   user.isVerified = true;
   user.verified = Date.now();
-  user.verificationToken = "";
+  // user.verificationToken = "";
 
   await user.save();
 
