@@ -14,6 +14,7 @@ const VerifyEmail = () => {
   const verifyToken = async () => {
     setLoading(true);
     console.log(query.get("token"));
+    console.log("fudge");
     try {
       const { data } = await customFetch.post("/auth/verify-email", {
         verificationToken: query.get("token"),
