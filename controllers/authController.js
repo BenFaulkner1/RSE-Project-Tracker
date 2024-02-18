@@ -14,14 +14,14 @@ export const register = async (req, res) => {
   let getDomainName = email.substring(email.indexOf("@") + 1);
   let getlcDomainName = getDomainName.toLowerCase();
 
-  if (
-    !getlcDomainName.includes("ross-eng") &&
-    !getlcDomainName.includes("envoygroup")
-  ) {
-    throw new BadRequestError(
-      "must be a ross-eng or envoy group email address"
-    );
-  }
+  // if (
+  //   !getlcDomainName.includes("ross-eng") &&
+  //   !getlcDomainName.includes("envoygroup")
+  // ) {
+  //   throw new BadRequestError(
+  //     "must be a ross-eng or envoy group email address"
+  //   );
+  // }
 
   const isFirstAccount = (await User.countDocuments()) === 0;
   req.body.role = isFirstAccount ? "admin" : "user";
@@ -53,7 +53,6 @@ export const verifyEmail = async (req, res) => {
   const { verificationToken, email } = req.body;
 
   const user = await User.findOne({ email });
-  console.log("bla bla", user.verificationToken);
 
   if (!user) {
     throw new UnauthenticatedError("verification failed");
